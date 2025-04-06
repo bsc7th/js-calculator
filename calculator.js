@@ -22,7 +22,7 @@ function calculator() {
   textInput.placeholder = "Results";
   textInput.readOnly = true;
 
-  // firstRow.append(textInput);
+  firstRow.append(textInput);
 
   return firstRow;
 }
