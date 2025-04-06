@@ -1,4 +1,4 @@
-function hero() {
+function heading() {
   const heroContainer = document.createElement("div");
   const heroWrapper = document.createElement("div");
 
@@ -11,11 +11,16 @@ function hero() {
   return heroContainer;
 }
 
+function calculator() {
+  // const firstRow = createElement("div");
+  // firstRow.classList.add("first-row");
+}
+
 function app() {
   const root = document.getElementById("root");
 
   if (root) {
-    root.append(hero());
+    root.append(heading());
   } else {
     console.error("Element with id 'root' not found.");
   }
