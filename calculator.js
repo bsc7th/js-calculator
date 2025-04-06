@@ -13,7 +13,7 @@ function heading() {
 
 function calculator() {
   const firstRow = createElement("div");
-  // firstRow.classList.add("first-row");
+  firstRow.classList.add("first-row");
 }
 
 function app() {
