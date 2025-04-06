@@ -3,7 +3,7 @@ function hero() {
   const heroWrapper = document.createElement("div");
 
   const title = document.createElement("h1");
-  // title.textContent = "Calculator";
+  title.textContent = "Calculator";
   //
   // heroContainer.append(heroWrapper);
   // heroWrapper.append(title);
