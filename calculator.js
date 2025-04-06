@@ -87,13 +87,17 @@ const STYLES = `
   }
 `;
 
-function createElement(tag, { classes = [], attributes = {} } = {}) {
+function createElement(
+  tag,
+  { classes = [], attributes = {}, events = {} } = {},
+) {
   const element = document.createElement(tag);
-  if (classes.length) {
-    element.classList.add(...classes);
-  }
+  element.classList.add(...classes);
   Object.entries(attributes).forEach(([attr, value]) => {
     element.setAttribute(attr, value);
+  });
+  Object.entries(events).forEach(([event, handler]) => {
+    element.addEventListener(event, handler);
   });
   return element;
 }
@@ -103,24 +107,27 @@ function createButton({
   onClickHandler,
   classes = [],
   attributes = {},
+  ariaLabel = "",
 }) {
-  const button = createElement("input", {
+  const button = createElement("button", {
     classes: ["button", ...classes],
     attributes: {
       type: "button",
-      value: label,
+      "aria-label": ariaLabel || label,
       ...attributes,
     },
+    events: { click: onClickHandler },
   });
 
-  button.addEventListener("click", onClickHandler);
+  button.textContent = label;
   return button;
 }
 
+// Function to safely evaluate expressions using the Function constructor.
 function safeEvaluate(expression) {
   const sanitizedExpression = expression.replace(/[^0-9+\-*/(). ]/g, "");
   try {
-    return eval(sanitizedExpression);
+    return new Function("return " + sanitizedExpression)();
   } catch (error) {
     return "Error";
   }
@@ -148,11 +155,13 @@ function createCalculator() {
       resultDisplay.value = "";
     },
     classes: ["clear-button"],
+    ariaLabel: "Clear screen",
   });
 
   inputRow.appendChild(resultDisplay);
   inputRow.appendChild(clearButton);
 
+  // Buttons
   const buttonRow1 = createElement("div", { classes: ["button-row"] });
   const buttonRow2 = createElement("div", { classes: ["button-row"] });
 
@@ -167,6 +176,7 @@ function createCalculator() {
           resultDisplay.value += number;
         },
         classes: ["number-button"],
+        ariaLabel: `Number ${number}`,
       }),
     );
   });
@@ -179,6 +189,7 @@ function createCalculator() {
           resultDisplay.value += ` ${operator} `;
         },
         classes: ["operator-button"],
+        ariaLabel: `Operator ${operator}`,
       }),
     );
   });
@@ -189,13 +200,17 @@ function createCalculator() {
       resultDisplay.value = safeEvaluate(resultDisplay.value) || "Error";
     },
     classes: ["equals-button"],
+    ariaLabel: "Calculate result",
   });
+
   buttonRow2.appendChild(equalsButton);
 
+  // Append button rows to the calculator container
   calculatorContainer.appendChild(inputRow);
   calculatorContainer.appendChild(buttonRow1);
   calculatorContainer.appendChild(buttonRow2);
 
+  // Inject styles
   if (!document.getElementById("calculator-styles")) {
     const styleSheet = document.createElement("style");
     styleSheet.id = "calculator-styles";
