@@ -15,14 +15,22 @@ function calculator() {
   const firstRow = document.createElement("div");
   firstRow.classList.add("first-row");
 
-  const textInput = document.createElement("input");
-  textInput.type = "text";
-  textInput.name = "results";
-  textInput.id = "Results";
-  textInput.placeholder = "Results";
-  textInput.readOnly = true;
+  const textOutput = document.createElement("input");
+  textOutput.type = "text";
+  textOutput.name = "results";
+  textOutput.id = "Results";
+  textOutput.placeholder = "Results";
+  textOutput.readOnly = true;
 
-  firstRow.append(textInput);
+  const buttonInput = document.createElement("input");
+  buttonInput.type = "button";
+  buttonInput.value = "C";
+  buttonInput.onclick = function () {
+    result.value = "";
+  };
+  buttonInput.id = "clear-button";
+
+  firstRow.append(textOutput, buttonInput);
 
   return firstRow;
 }
