@@ -1,6 +1,6 @@
 function hero() {
   const heroContainer = document.createElement("div");
-  // const heroWrapper = document.createElement("div");
+  const heroWrapper = document.createElement("div");
   //
   // const title = document.createElement("h1");
   // title.textContent = "Calculator";
