@@ -31,7 +31,7 @@ function app() {
   const root = document.getElementById("root");
 
   if (root) {
-    root.append(heading());
+    root.append(heading(), calculator());
   } else {
     console.error("Element with id 'root' not found.");
   }
