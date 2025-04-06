@@ -4,9 +4,9 @@ function hero() {
 
   const title = document.createElement("h1");
   title.textContent = "Calculator";
-  //
-  // heroContainer.append(heroWrapper);
-  // heroWrapper.append(title);
+
+  heroContainer.append(heroWrapper);
+  heroWrapper.append(title);
 
   return heroContainer;
 }
