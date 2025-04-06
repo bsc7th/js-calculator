@@ -117,6 +117,15 @@ function createButton({
   return button;
 }
 
+function safeEvaluate(expression) {
+  const sanitizedExpression = expression.replace(/[^0-9+\-*/(). ]/g, "");
+  try {
+    return eval(sanitizedExpression);
+  } catch (error) {
+    return "Error";
+  }
+}
+
 function createCalculator() {
   const calculatorContainer = createElement("div", {
     classes: ["calculator-container"],
@@ -145,7 +154,12 @@ function createCalculator() {
   inputRow.appendChild(clearButton);
 
   const buttonRow1 = createElement("div", { classes: ["button-row"] });
-  for (let number = 0; number <= 9; number++) {
+  const buttonRow2 = createElement("div", { classes: ["button-row"] });
+
+  const numbers = Array.from({ length: 10 }, (_, i) => i);
+  const operators = ["+", "-", "*", "/"];
+
+  numbers.forEach((number) => {
     buttonRow1.appendChild(
       createButton({
         label: number,
@@ -155,10 +169,8 @@ function createCalculator() {
         classes: ["number-button"],
       }),
     );
-  }
+  });
 
-  const operators = ["+", "-", "*", "/"];
-  const buttonRow2 = createElement("div", { classes: ["button-row"] });
   operators.forEach((operator) => {
     buttonRow2.appendChild(
       createButton({
@@ -174,16 +186,10 @@ function createCalculator() {
   const equalsButton = createButton({
     label: "=",
     onClickHandler: () => {
-      try {
-        resultDisplay.value =
-          new Function("return " + resultDisplay.value)() || "Error";
-      } catch (error) {
-        resultDisplay.value = "Error";
-      }
+      resultDisplay.value = safeEvaluate(resultDisplay.value) || "Error";
     },
     classes: ["equals-button"],
   });
-
   buttonRow2.appendChild(equalsButton);
 
   calculatorContainer.appendChild(inputRow);
