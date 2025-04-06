@@ -12,8 +12,19 @@ function heading() {
 }
 
 function calculator() {
-  const firstRow = createElement("div");
+  const firstRow = document.createElement("div");
   firstRow.classList.add("first-row");
+
+  const textInput = document.createElement("input");
+  textInput.type = "text";
+  textInput.name = "results";
+  textInput.id = "Results";
+  textInput.placeholder = "Results";
+  textInput.readOnly = true;
+
+  // firstRow.append(textInput);
+
+  return firstRow;
 }
 
 function app() {
